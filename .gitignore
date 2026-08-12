@@ -1,0 +1,22 @@
+# Artefacts de labs (souvent volumineux / sous licence plateforme)
+*.pcap
+*.pcapng
+*.raw
+*.mem
+*.vmem
+*.E01
+*.dmp
+*.zip
+*.7z
+*.tar.gz
+
+# OS / éditeurs
+.DS_Store
+Thumbs.db
+desktop.ini
+.vscode/
+.idea/
+
+# Temporaire
+*.tmp
+*.log
