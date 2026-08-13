@@ -26,6 +26,7 @@
 | Jour | Lab | Plateforme | Catégorie | Writeup | LinkedIn |
 |:----:|-----|:----------:|:---------:|:-------:|:--------:|
 | 001  | Lockdown Lab | CyberDefenders | Network Forensics | [Voir](./Day-001/) | ✍️ |
+| 002  | XLMRat Lab | CyberDefenders | Network Forensics | [Voir](./Day-002/) | ✍️ |
 
 <sub>🔄 Ce tableau est mis à jour à chaque nouveau lab.</sub>
 
