@@ -1,46 +1,47 @@
+<div align="center">
+
 # 100 Days of Cybersecurity Labs
 
-Je me suis lancé un défi simple sur le papier, exigeant au quotidien : résoudre **un lab de cybersécurité par jour pendant 100 jours**, et rédiger à chaque fois un writeup clair — assez détaillé pour qu'une autre personne puisse refaire la démarche, assez honnête pour que je puisse y revenir dans six mois et comprendre ce que j'ai appris.
+<a href="https://github.com/simohowaanaa/100-Days-Of-Cybersecurity-Labs">
+  <img src="https://readme-typing-svg.demolab.com/?font=Fira+Code&size=22&pause=1000&color=4AA0D5&center=true&vCenter=true&width=560&lines=1+lab+par+jour+pendant+100+jours;Network+Forensics+%C2%B7+SOC+%C2%B7+Threat+Intel;Analyser%2C+comprendre%2C+documenter." alt="typing banner" />
+</a>
 
-Ce dépôt est le carnet de bord de ce parcours.
-
----
-
-## Pourquoi ce projet
-
-Je suis étudiant en ingénierie cybersécurité et réseaux, et je crois qu'on n'apprend vraiment qu'en mettant les mains dans les artefacts : lire un vrai PCAP, déobfusquer un vrai script, suivre une intrusion du premier paquet jusqu'au malware. La théorie donne le vocabulaire ; les labs donnent le réflexe.
-
-L'objectif n'est pas d'accumuler des flags, mais de construire une **méthode** reproductible et de savoir l'**expliquer**. Chaque writeup suit donc la même logique : observer, identifier, corréler, puis relier les découvertes au framework MITRE ATT&CK et proposer des pistes de défense.
-
-**Domaines couverts :** Network Forensics · SOC · Threat Intelligence · Web Security · Reverse Engineering.
+</div>
 
 ---
+
+Un lab de cybersécurité par jour pendant 100 jours, avec à chaque fois un writeup pour garder une trace de la démarche. Ce dépôt est mon carnet de bord.
+
+## Pourquoi
+
+Étudiant en ingénierie cybersécurité et réseaux, je progresse surtout en pratiquant : lire un vrai PCAP, déobfusquer un script, suivre une intrusion du premier paquet jusqu'au malware. L'idée n'est pas de collectionner des flags, mais de me construire une méthode et d'être capable de l'expliquer.
+
+Chaque writeup suit le même fil : observer, identifier, corréler, puis relier les découvertes à MITRE ATT&CK et noter quelques pistes de défense.
+
+Domaines : Network Forensics, SOC, Threat Intelligence, Web Security, Reverse Engineering.
 
 ## Progression
 
-`██░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░`  **2 / 100**
+<div align="center">
+
+<img src="https://progress-bar.xyz/2/?scale=100&width=420&color=4aa0d5&suffix=%20/%20100" alt="progression 2/100" />
+
+</div>
 
 | Jour | Lab | Plateforme | Catégorie | Writeup |
 |:----:|:----|:----------:|:----------|:-------:|
 | 001 | Lockdown Lab | CyberDefenders | Network Forensics | [Lire](./Day-001/) |
 | 002 | XLMRat Lab | CyberDefenders | Network Forensics | [Lire](./Day-002/) |
 
-*Tableau mis à jour à chaque nouveau lab.*
-
----
-
 ## Comment je travaille
 
-Chaque jour suit à peu près le même fil :
+1. Survol de l'artefact avant tout, pour comprendre le terrain.
+2. Analyse guidée par les questions, sans perdre l'histoire globale.
+3. Corrélation des sources quand il y en a plusieurs (réseau, mémoire, binaire).
+4. Rédaction : démarche, commandes, captures, mapping ATT&CK, recommandations.
 
-1. **Survol** de l'artefact avant toute chose — comprendre le terrain avant de chercher une réponse.
-2. **Analyse** guidée par les questions, mais sans perdre de vue l'histoire globale de l'attaque.
-3. **Corrélation** des sources quand il y en a plusieurs (réseau, mémoire, binaire).
-4. **Rédaction** du writeup : démarche, commandes, captures, puis mapping ATT&CK et recommandations défensives.
-
-Les outils reviennent souvent : Wireshark et tshark pour le réseau, Volatility 3 pour la mémoire, CyberChef et FLOSS pour le malware, VirusTotal pour le renseignement. Côté plateformes, je puise dans CyberDefenders, TryHackMe, Hack The Box, SecDojo et PortSwigger.
-
----
+Outils courants : Wireshark et tshark, Volatility 3, CyberChef, FLOSS, VirusTotal.
+Plateformes : CyberDefenders, TryHackMe, Hack The Box, SecDojo, PortSwigger.
 
 ## Organisation du dépôt
 
@@ -50,22 +51,16 @@ Les outils reviennent souvent : Wireshark et tshark pour le réseau, Volatility 
 │   ├── README.md        writeup du jour
 │   └── screenshots/     captures à l'appui
 ├── Day-002/
-├── _templates/          modèle de writeup réutilisé chaque jour
-└── new-day.ps1          crée le dossier du jour à partir du modèle
+├── _templates/          modèle de writeup
+└── new-day.ps1          crée le dossier du jour
 ```
 
-Pour démarrer une nouvelle journée :
+Nouvelle journée :
 
 ```powershell
 .\new-day.ps1 -Day 3
 ```
 
----
+## Éthique
 
-## Une note sur l'éthique
-
-Ces writeups sont publiés pour apprendre et partager, pas pour distribuer des solutions. Je respecte les conditions de chaque plateforme : tant qu'un lab est **actif**, je ne documente que la méthode — les filtres, les outils, le raisonnement — sans révéler les réponses. Les writeups complets ne concernent que les labs **retirés**, pour lesquels la publication est autorisée.
-
----
-
-*Suivi quotidien du challenge sur LinkedIn. Si le parcours vous parle, n'hésitez pas à passer voir les writeups.*
+Tant qu'un lab est actif, je ne documente que la méthode — filtres, outils, raisonnement — sans révéler les réponses, conformément aux règles des plateformes. Les writeups complets ne concernent que les labs retirés.
