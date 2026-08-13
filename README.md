@@ -24,7 +24,7 @@ Domaines : Network Forensics, SOC, Threat Intelligence, Web Security, Reverse En
 
 <div align="center">
 
-<img src="https://progress-bar.xyz/2/?scale=100&width=420&color=4aa0d5&suffix=%20/%20100" alt="progression 2/100" />
+<img src="https://progress-bar.xyz/3/?scale=100&width=420&color=4aa0d5&suffix=%20/%20100" alt="progression 3/100" />
 
 </div>
 
@@ -32,6 +32,7 @@ Domaines : Network Forensics, SOC, Threat Intelligence, Web Security, Reverse En
 |:----:|:----|:----------:|:----------|:-------:|
 | 001 | Lockdown Lab | CyberDefenders | Network Forensics | [Lire](./Day-001/) |
 | 002 | XLMRat Lab | CyberDefenders | Network Forensics | [Lire](./Day-002/) |
+| 003 | DanaBot Lab | CyberDefenders | Network Forensics | [Lire](./Day-003/) |
 
 ## Comment je travaille
 
