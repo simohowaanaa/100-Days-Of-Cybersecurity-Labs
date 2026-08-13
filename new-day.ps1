@@ -24,7 +24,7 @@ New-Item -ItemType Directory -Path $folder | Out-Null
 New-Item -ItemType Directory -Path (Join-Path $folder "screenshots") | Out-Null
 
 $template = Get-Content (Join-Path $root "_templates\README-template.md") -Raw
-$template = $template -replace "Day-XXX", "Day-$num"
+$template = $template -replace "Day XXX", "Day $num"
 $template = $template -replace "AAAA-MM-JJ", (Get-Date -Format "yyyy-MM-dd")
 Set-Content -Path (Join-Path $folder "README.md") -Value $template -Encoding utf8
 

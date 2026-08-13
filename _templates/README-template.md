@@ -1,46 +1,50 @@
-# Day-XXX — <Nom du Lab>
+# Day XXX — <Nom du Lab>
 
 | | |
 |---|---|
-| **Plateforme** | CyberDefenders / TryHackMe / HTB / SecDojo / PortSwigger |
-| **Catégorie** | Network Forensics / SOC / Web / Reverse / … |
-| **Difficulté** | Easy / Medium / Hard |
-| **Date** | AAAA-MM-JJ |
-| **Lien** | <url du lab> |
+| Plateforme | CyberDefenders / TryHackMe / HTB / SecDojo / PortSwigger |
+| Catégorie | Network Forensics / SOC / Web / Reverse |
+| Difficulté | Easy / Medium / Hard — Active ou Retired |
+| Date | AAAA-MM-JJ |
+| Outils | Wireshark, ... |
 
----
+<!-- Si le lab est ACTIF : documenter uniquement la méthode, masquer les réponses.
+     Si le lab est RETIRED : les réponses peuvent être incluses. -->
 
-## 🎯 Contexte / Scénario
+## Contexte
 
-<Résumé du scénario du lab en 2-3 phrases.>
+<Résumé du scénario en deux ou trois phrases : qui est la victime, que cherche-t-on à reconstruire.>
 
-## 🧰 Outils utilisés
+<Optionnel : la chaîne d'attaque en une ligne.>
 
-- Wireshark / tshark
-- …
-
-## 🔍 Démarche
-
-### 1. Reconnaissance / première analyse
-<Ce que tu observes en ouvrant les artefacts.>
-
-### 2. Analyse détaillée
-<Étapes, commandes, filtres, captures.>
-
-```bash
-# exemple de commande
+```
+étape 1  ->  étape 2  ->  étape 3
 ```
 
-## ❓ Questions & Réponses
+## Analyse
 
-| # | Question | Réponse | Comment je l'ai trouvée |
-|---|----------|---------|--------------------------|
-| 1 | … | `…` | … |
+### Q1 — <intitulé court>
 
-## 🧠 Ce que j'ai appris
+<Le raisonnement : ce qu'on cherche, le filtre ou la commande, ce qu'on observe.>
 
-- …
+![légende](screenshots/xx-nom.png)
 
-## 🛡️ Détection / Recommandations (blue team)
+**Réponse : `...`** — ATT&CK Txxxx.
 
-- …
+<!-- Répéter pour chaque question. Regrouper par phase (réseau, mémoire, malware...). -->
+
+## Récapitulatif
+
+| Q | Élément | Réponse |
+|---|---|---|
+| 1 | ... | `...` |
+
+Mapping MITRE ATT&CK : Txxxx, Txxxx.
+
+## Ce que je retiens
+
+<Un paragraphe : ce qui a été marquant ou nouveau dans ce lab.>
+
+## Côté défense
+
+- <Recommandation de détection ou de durcissement.>
