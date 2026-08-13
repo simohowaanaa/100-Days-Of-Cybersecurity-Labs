@@ -1,137 +1,71 @@
-<div align="center">
+# 100 Days of Cybersecurity Labs
 
-# 🛡️ 100 Days of Cybersecurity Labs
+Je me suis lancé un défi simple sur le papier, exigeant au quotidien : résoudre **un lab de cybersécurité par jour pendant 100 jours**, et rédiger à chaque fois un writeup clair — assez détaillé pour qu'une autre personne puisse refaire la démarche, assez honnête pour que je puisse y revenir dans six mois et comprendre ce que j'ai appris.
 
-### 1 lab · 1 writeup · 1 post LinkedIn — chaque jour, pendant 100 jours.
-
-<br>
-
-![Progress](https://img.shields.io/badge/Progression-2%2F100-blue?style=for-the-badge)
-![Days](https://img.shields.io/badge/Jours%20consécutifs-2-success?style=for-the-badge)
-![Focus](https://img.shields.io/badge/Focus-Blue%20Team%20%2F%20DFIR-9cf?style=for-the-badge)
-
-<br>
-
-![Wireshark](https://img.shields.io/badge/Wireshark-1679A7?style=flat-square&logo=wireshark&logoColor=white)
-![Volatility](https://img.shields.io/badge/Volatility%203-2C3E50?style=flat-square)
-![CyberChef](https://img.shields.io/badge/CyberChef-F9A825?style=flat-square&logoColor=white)
-![VirusTotal](https://img.shields.io/badge/VirusTotal-394EFF?style=flat-square&logo=virustotal&logoColor=white)
-![Burp Suite](https://img.shields.io/badge/Burp%20Suite-FF6633?style=flat-square&logo=burpsuite&logoColor=white)
-![Ghidra](https://img.shields.io/badge/Ghidra-CF2B27?style=flat-square)
-![MITRE ATT&CK](https://img.shields.io/badge/MITRE%20ATT%26CK-C1272D?style=flat-square)
-
-</div>
+Ce dépôt est le carnet de bord de ce parcours.
 
 ---
 
-## 👋 À propos
+## Pourquoi ce projet
 
-Défi personnel mené par **[simohowaanaa](https://github.com/simohowaanaa)** — étudiant en **Ingénierie Cybersécurité & Réseaux**.
-Objectif : construire une expertise **pratique** et **documentée**, un lab à la fois.
+Je suis étudiant en ingénierie cybersécurité et réseaux, et je crois qu'on n'apprend vraiment qu'en mettant les mains dans les artefacts : lire un vrai PCAP, déobfusquer un vrai script, suivre une intrusion du premier paquet jusqu'au malware. La théorie donne le vocabulaire ; les labs donnent le réflexe.
 
-> 📅 **Début :** 09 août 2026 · 🎯 **Cible :** 100 labs · 📈 **Domaines :** Network Forensics · SOC · Threat Intelligence · Web Security · Reverse Engineering / CTF
+L'objectif n'est pas d'accumuler des flags, mais de construire une **méthode** reproductible et de savoir l'**expliquer**. Chaque writeup suit donc la même logique : observer, identifier, corréler, puis relier les découvertes au framework MITRE ATT&CK et proposer des pistes de défense.
+
+**Domaines couverts :** Network Forensics · SOC · Threat Intelligence · Web Security · Reverse Engineering.
 
 ---
 
-## 📊 Progression — `2 / 100`
+## Progression
+
+`██░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░`  **2 / 100**
+
+| Jour | Lab | Plateforme | Catégorie | Writeup |
+|:----:|:----|:----------:|:----------|:-------:|
+| 001 | Lockdown Lab | CyberDefenders | Network Forensics | [Lire](./Day-001/) |
+| 002 | XLMRat Lab | CyberDefenders | Network Forensics | [Lire](./Day-002/) |
+
+*Tableau mis à jour à chaque nouveau lab.*
+
+---
+
+## Comment je travaille
+
+Chaque jour suit à peu près le même fil :
+
+1. **Survol** de l'artefact avant toute chose — comprendre le terrain avant de chercher une réponse.
+2. **Analyse** guidée par les questions, mais sans perdre de vue l'histoire globale de l'attaque.
+3. **Corrélation** des sources quand il y en a plusieurs (réseau, mémoire, binaire).
+4. **Rédaction** du writeup : démarche, commandes, captures, puis mapping ATT&CK et recommandations défensives.
+
+Les outils reviennent souvent : Wireshark et tshark pour le réseau, Volatility 3 pour la mémoire, CyberChef et FLOSS pour le malware, VirusTotal pour le renseignement. Côté plateformes, je puise dans CyberDefenders, TryHackMe, Hack The Box, SecDojo et PortSwigger.
+
+---
+
+## Organisation du dépôt
 
 ```
-██░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░  2%
-```
-
-| Jour | Lab | Plateforme | Catégorie | Difficulté | Writeup |
-|:----:|:----|:----------:|:----------:|:----------:|:-------:|
-| `001` | 🔒 Lockdown Lab | CyberDefenders | Network Forensics | 🟢 Easy | [📖 Lire](./Day-001/) |
-| `002` | 🧬 XLMRat Lab | CyberDefenders | Network Forensics | 🟢 Easy | [📖 Lire](./Day-002/) |
-
-<sub>🔄 Tableau mis à jour à chaque nouveau lab.</sub>
-
----
-
-## 🧠 Compétences travaillées
-
-<table>
-<tr>
-<td valign="top" width="33%">
-
-### 🌐 Network Forensics
-- Analyse PCAP (Wireshark / tshark)
-- Suivi de flux & extraction d'objets
-- Détection de scans & C2
-- Corrélation multi-sources
-
-</td>
-<td valign="top" width="33%">
-
-### 🧠 Memory & Malware
-- Volatility 3 (pstree, netscan…)
-- Déobfuscation de scripts
-- Analyse statique (CyberChef, FLOSS)
-- Threat Intel (VirusTotal)
-
-</td>
-<td valign="top" width="33%">
-
-### 🎯 Méthodologie
-- Reconstruction de kill chains
-- Mapping **MITRE ATT&CK**
-- Recommandations Blue Team
-- Writeups reproductibles
-
-</td>
-</tr>
-</table>
-
----
-
-## 🧰 Boîte à outils
-
-| Domaine | Outils |
-|---|---|
-| 🌐 **Réseau** | Wireshark · tshark · capinfos · Zeek · Suricata |
-| 🧠 **Mémoire** | Volatility 3 · MemProcFS |
-| 🦠 **Malware** | FLOSS · strings · CyberChef · VirusTotal |
-| 🕸️ **Web** | Burp Suite · OWASP ZAP |
-| 🔬 **Reverse** | Ghidra · x64dbg |
-
-**Plateformes :** CyberDefenders · TryHackMe · Hack The Box · SecDojo · PortSwigger
-
----
-
-## 🗂️ Structure du dépôt
-
-```
-100-Days-Of-Cybersecurity-Labs/
+.
 ├── Day-001/
-│   ├── README.md          # Writeup structuré
-│   └── screenshots/       # Captures illustrées
+│   ├── README.md        writeup du jour
+│   └── screenshots/     captures à l'appui
 ├── Day-002/
-│   └── ...
-├── _templates/            # Modèle de writeup réutilisable
-└── new-day.ps1            # Script : crée le dossier du jour
+├── _templates/          modèle de writeup réutilisé chaque jour
+└── new-day.ps1          crée le dossier du jour à partir du modèle
 ```
 
-💡 **Workflow quotidien :**
+Pour démarrer une nouvelle journée :
+
 ```powershell
-.\new-day.ps1 -Day 3     # crée Day-003/ pré-rempli à partir du template
+.\new-day.ps1 -Day 3
 ```
 
 ---
 
-## ⚠️ Note éthique
+## Une note sur l'éthique
 
-Ces writeups sont publiés à des fins **strictement éducatives**. Je respecte les conditions de chaque plateforme :
-pour un lab **actif**, je documente **uniquement la méthodologie** (filtres, outils, raisonnement) sans divulguer les flags ;
-les réponses complètes ne sont publiées que pour les labs **retirés (retired)**.
+Ces writeups sont publiés pour apprendre et partager, pas pour distribuer des solutions. Je respecte les conditions de chaque plateforme : tant qu'un lab est **actif**, je ne documente que la méthode — les filtres, les outils, le raisonnement — sans révéler les réponses. Les writeups complets ne concernent que les labs **retirés**, pour lesquels la publication est autorisée.
 
 ---
 
-<div align="center">
-
-### 💬 Suivez ma progression au jour le jour sur LinkedIn
-
-**#Cybersecurity · #DFIR · #BlueTeam · #100DaysOfCybersecurity**
-
-<sub>⭐ Star le repo si ce challenge t'inspire !</sub>
-
-</div>
+*Suivi quotidien du challenge sur LinkedIn. Si le parcours vous parle, n'hésitez pas à passer voir les writeups.*
