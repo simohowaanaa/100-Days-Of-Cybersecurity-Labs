@@ -26,6 +26,8 @@ L'analyse suit un fil logique : le `manifest.json` d'abord (les permissions trah
 "permissions": ["tabs", "http://*/*", "https://*/*", "storage", "webRequest", "webRequestBlocking", "cookies"]
 ```
 
+![manifest.json - permissions dont cookies](screenshots/01-manifest-permissions-cookies.png)
+
 Un simple « assistant IA » n'a aucune raison de demander l'accès aux cookies de tous les sites : signal d'alarme immédiat. Le manifest indique aussi le point de départ (`loader.js`) et le script injecté dans toutes les pages (`app.js`).
 
 ### Q10 — Données de session / authentification accédées
@@ -42,6 +44,8 @@ if (navigator.plugins.length === 0 || /HeadlessChrome/.test(navigator.userAgent)
 }
 ```
 
+![loader.js - anti-analyse et chargement de app.js](screenshots/02-loader-anti-analyse.png)
+
 Les sandbox et navigateurs automatisés n'ont pas de plugins : l'extension détecte ainsi qu'elle est observée et se désactive.
 
 ### Q4 — Première condition de désactivation
@@ -49,6 +53,10 @@ Les sandbox et navigateurs automatisés n'ont pas de plugins : l'extension déte
 **Réponse : `navigator.plugins.length === 0`** — ATT&CK T1497 (Virtualization/Sandbox Evasion).
 
 ## app.js — le cœur malveillant
+
+Tout le comportement malveillant tient dans ce seul fichier : cible encodée, capture des identifiants et des frappes, chiffrement, puis exfiltration.
+
+![app.js - cœur malveillant complet](screenshots/03-app-core-malveillant.png)
 
 ### Q1 — Encodage masquant les URLs
 
@@ -58,6 +66,8 @@ const targets = [_0xabc1('d3d3LmZhY2Vib29rLmNvbQ==')];
 ```
 
 La cible est encodée pour ne pas apparaître en clair. Décodée avec CyberChef (From Base64), `d3d3LmZhY2Vib29rLmNvbQ==` donne `www.facebook.com`.
+
+![CyberChef - décodage base64 vers www.facebook.com](screenshots/04-cyberchef-base64-facebook.png)
 
 **Réponse : `base64`** — ATT&CK T1027 (Obfuscated Files or Information).
 
