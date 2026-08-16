@@ -8,7 +8,7 @@
 
 <br><br>
 
-<img src="https://progress-bar.xyz/5/?scale=100&width=420&color=4aa0d5&suffix=%20/%20100" alt="progression 5/100" />
+<img src="https://progress-bar.xyz/6/?scale=100&width=420&color=4aa0d5&suffix=%20/%20100" alt="progression 6/100" />
 
 </div>
 
@@ -43,6 +43,7 @@ Domaines : Network Forensics, SOC, Threat Intelligence, Web Security, Reverse En
 | 003 | DanaBot Lab | CyberDefenders | Network Forensics | Easy | JavaScript obfusqué, wscript.exe, extraction d'IOCs | [Lire](./Day-003/) |
 | 004 | PsExec Hunt Lab | CyberDefenders | Network Forensics | Easy | Mouvement latéral SMB, ADMIN$/IPC$, NTLM, PSEXESVC | [Lire](./Day-004/) |
 | 005 | Web Investigation Lab | CyberDefenders | Network Forensics | Easy | Injection SQL, sqlmap, dump de base, web-shell | [Lire](./Day-005/) |
+| 006 | FakeGPT Lab | CyberDefenders | Malware Analysis | Easy | Extension Chrome malveillante, keylogger, exfil `<img>` | [Lire](./Day-006/) |
 
 ## Techniques MITRE ATT&CK couvertes
 
@@ -54,6 +55,7 @@ Domaines : Network Forensics, SOC, Threat Intelligence, Web Security, Reverse En
 | Defense Evasion | T1027 (Obfuscation), T1055 (Process Injection), T1218 (Signed Binary Proxy) |
 | Persistence | T1505.003 (Web Shell), T1547.001 (Startup Folder), T1053.005 (Scheduled Task) |
 | Command & Control | T1071.001 (Web Protocols), T1105 (Ingress Tool Transfer), T1571 (Non-Standard Port) |
+| Collection / Exfiltration | T1056.001 (Keylogging), T1539 (Steal Session Cookie), T1176 (Browser Extensions), T1041 (Exfil over C2) |
 
 ## Méthode de travail
 
