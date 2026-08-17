@@ -8,7 +8,7 @@
 
 <br><br>
 
-<img src="https://progress-bar.xyz/7/?scale=100&width=420&color=4aa0d5&suffix=%20/%20100" alt="progression 7/100" />
+<img src="https://progress-bar.xyz/8/?scale=100&width=420&color=4aa0d5&suffix=%20/%20100" alt="progression 8/100" />
 
 </div>
 
@@ -45,6 +45,7 @@ Domaines : Network Forensics, SOC, Threat Intelligence, Web Security, Reverse En
 | 005 | Web Investigation Lab | CyberDefenders | Network Forensics | Easy | Injection SQL, sqlmap, dump de base, web-shell | [Lire](./Day-005/) |
 | 006 | FakeGPT Lab | CyberDefenders | Malware Analysis | Easy | Extension Chrome malveillante, keylogger, exfil `<img>` | [Lire](./Day-006/) |
 | 007 | Ramnit Lab | CyberDefenders | Endpoint Forensics | Easy | Forensic mémoire Volatility 3, faux ChromeSetup, C2, IOCs | [Lire](./Day-007/) |
+| 008 | Reveal Lab | CyberDefenders | Endpoint Forensics | Easy | Attaque multi-étapes, PowerShell caché, WebDAV, rundll32, StrelaStealer | [Lire](./Day-008/) |
 
 ## Techniques MITRE ATT&CK couvertes
 
