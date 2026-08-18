@@ -8,7 +8,7 @@
 
 <br><br>
 
-<img src="https://progress-bar.xyz/9/?scale=100&width=420&color=4aa0d5&suffix=%20/%20100" alt="progression 9/100" />
+<img src="https://progress-bar.xyz/10/?scale=100&width=420&color=4aa0d5&suffix=%20/%20100" alt="progression 10/100" />
 
 </div>
 
@@ -47,6 +47,7 @@ Domaines : Network Forensics, SOC, Threat Intelligence, Web Security, Reverse En
 | 007 | Ramnit Lab | CyberDefenders | Endpoint Forensics | Easy | Forensic mémoire Volatility 3, faux ChromeSetup, C2, IOCs | [Lire](./Day-007/) |
 | 008 | Reveal Lab | CyberDefenders | Endpoint Forensics | Easy | Attaque multi-étapes, PowerShell caché, WebDAV, rundll32, StrelaStealer | [Lire](./Day-008/) |
 | 009 | IcedID Lab | CyberDefenders | Threat Intelligence | Easy | Pivot VirusTotal/Malpedia/Tria.ge, macro XLM, IOCs, GOLD CABIN | [Lire](./Day-009/) |
+| 010 | Red Stealer Lab | CyberDefenders | Threat Intelligence | Easy | VirusTotal/MalwareBazaar/ThreatFox, C2, YARA, RedLine Stealer | [Lire](./Day-010/) |
 
 ## Techniques MITRE ATT&CK couvertes
 
